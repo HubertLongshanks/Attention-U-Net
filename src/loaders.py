@@ -12,6 +12,7 @@ class ImageLoader(torch.utils.data.Dataset):
         img_chips_dir: str,
         ground_truth_chips_dir: str,
         use_transform: bool = True,
+        scale_factor : int = 255
     ):
         """Load NAIP imagery for processing
 
@@ -110,7 +111,7 @@ class ImageLoader(torch.utils.data.Dataset):
 
         transformed: tuple[tv_tensors.Image, tv_tensors.Mask] = self.choose_transform(
             (
-                tv_tensors.Image(torch.tensor(data, dtype=torch.float32)),
+                tv_tensors.Image(torch.tensor(data / scale_factor , dtype=torch.float32)),
                 tv_tensors.Mask(torch.tensor(gt, dtype=torch.float32).unsqueeze(0)),
             )
         )
